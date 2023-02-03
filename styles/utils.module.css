@@ -1,0 +1,8 @@
+.flexNone {
+	flex: none;
+}
+
+.flex1 {
+	flex: 1;
+	border: 1px solid red;
+}

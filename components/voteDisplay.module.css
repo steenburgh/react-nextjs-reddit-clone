@@ -1,0 +1,7 @@
+.voteDisplay {
+	width: 64px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border: 1px solid green; /* Debug */
+}
