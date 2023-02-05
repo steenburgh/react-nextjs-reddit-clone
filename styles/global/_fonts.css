@@ -1,0 +1,41 @@
+:root {
+	--size-font-h1: 2.5rem;
+	--size-font-h2: 2rem;
+	--size-font-h3: 1.5rem;
+	--size-font-h4: 1.2rem;
+	--size-font-default: 1rem;
+	--size-font-small: 0.8rem;
+
+	--font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
+		"Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
+		"Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+}
+
+/* TODO: Expose these selectors in utils somehow? */
+body, .text-default {
+	font-size: var(--size-font-default);
+	font-family: var(--font-mono);
+	line-height: 1.5;
+	color: var(--color-foreground);
+	background: var(--color-background);
+}
+
+h1, .h1 {
+	font-size: var(--size-font-h1);
+}
+
+h2, .h2 {
+	font-size: var(--size-font-h2);
+}
+
+h3, .h3 {
+	font-size: var(--size-font-h3);
+}
+
+h4, .h4 {
+	font-size: var(--size-font-h4);
+}
+
+small, .text-small {
+	font-size: var(--size-font-small);
+}

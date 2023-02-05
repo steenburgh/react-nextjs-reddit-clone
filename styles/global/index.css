@@ -1,0 +1,22 @@
+@import "./_sizes.css";
+@import "./_colors.css";
+@import "./_fonts.css";
+
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+button {
+	all: unset;
+	display: block;
+	cursor: pointer;
+}
+
+a {
+	/* TODO */
+	color: inherit;
+	text-decoration: none;
+}
+

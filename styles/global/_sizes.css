@@ -1,0 +1,11 @@
+:root {
+	--size-xxs: 2px;
+	--size-xs: 4px;
+	--size-s: 8px;
+	--size-m: 12px;
+	--size-l: 16px;
+	--size-xl: 24px;
+	--size-xxl: 32px;
+
+	--border-radius: var(--size-xs);
+}
