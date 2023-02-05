@@ -1,0 +1,38 @@
+.flexContainer {
+	display: flex;
+}
+
+.flexCol {
+	flex-direction: column;
+}
+
+.flexGapL {
+	gap: var(--size-l);
+}
+
+.flexAlignCenter {
+	flex-direction: column;
+	align-items: center;
+}
+
+.flexNone {
+	flex: none;
+}
+
+.flex1 {
+	flex: 1;
+}
+
+.flipH {
+	transform: rotateZ(180deg);
+}
+
+.cardLevel1 {
+	border: 1px solid var(--color-border);
+	background: var(--color-level-1);
+	border-radius: var(--border-radius);
+}
+
+.paddingL {
+	padding: var(--size-l);
+}

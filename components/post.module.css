@@ -1,0 +1,5 @@
+.post {
+	gap: var(--size-l);
+	padding: var(--size-l);
+	width: 100%;
+}

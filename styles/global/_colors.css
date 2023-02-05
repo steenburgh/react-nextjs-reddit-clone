@@ -1,0 +1,107 @@
+/* Color Pallette */
+/* TODO: Ensure these are optimized out in prod build */
+:root {
+	--color-accent-10: #D6FEFF;
+	--color-accent-20: #AEF8FF;
+	--color-accent-30: #86ECFF;
+	--color-accent-40: #68DDFF;
+	--color-accent-50: #36C5FF;
+	--color-accent-60: #279BDB;
+	--color-accent-70: #1B75B7;
+	--color-accent-80: #115393;
+	--color-accent-90: #0A3B7A;
+	--color-success-10: #F2FBCE;
+	--color-success-20: #E3F79F;
+	--color-success-30: #C8E96C;
+	--color-success-40: #A9D346;
+	--color-success-50: #81B714;
+	--color-success-60: #699D0E;
+	--color-success-70: #53830A;
+	--color-success-80: #3E6A06;
+	--color-success-90: #305703;
+	--color-info-10: #D6FCFF;
+	--color-info-20: #ADF5FF;
+	--color-info-30: #83E8FF;
+	--color-info-40: #65D8FF;
+	--color-info-50: #32BEFF;
+	--color-info-60: #2495DB;
+	--color-info-70: #1970B7;
+	--color-info-80: #0F5093;
+	--color-info-90: #09397A;
+	--color-warning-10: #FFF5D1;
+	--color-warning-20: #FFE7A4;
+	--color-warning-30: #FFD676;
+	--color-warning-40: #FFC654;
+	--color-warning-50: #FFAB1C;
+	--color-warning-60: #DB8A14;
+	--color-warning-70: #B76C0E;
+	--color-warning-80: #935008;
+	--color-warning-90: #7A3D05;
+	--color-danger-10: #FFE5D7;
+	--color-danger-20: #FFC5AF;
+	--color-danger-30: #FF9D87;
+	--color-danger-40: #FF7869;
+	--color-danger-50: #FF3B38;
+	--color-danger-60: #DB2835;
+	--color-danger-70: #B71C34;
+	--color-danger-80: #931131;
+	--color-danger-90: #7A0A2F;
+	--color-gray-5: hsl(0, 0%, 96.90%);
+	--color-gray-10: hsl(0, 0%, 93.70%);
+	--color-gray-20: hsl(0, 0%, 87.50%);
+	--color-gray-30: hsl(0, 0%, 79.20%);
+	--color-gray-40: hsl(0, 0%, 65.90%);
+	--color-gray-50: hsl(0, 0%, 52.90%);
+	--color-gray-60: hsl(0, 0%, 42.70%);
+	--color-gray-70: hsl(0, 0%, 37.30%);
+	--color-gray-80: hsl(0, 0%, 29.00%);
+	--color-gray-90: hsl(0, 0%, 23.90%);
+	--color-gray-100: hsl(0, 0%, 16.50%);
+	--color-gray-110: hsl(0, 0%, 11.00%);
+	--color-gray-120: hsl(0, 0%, 7.10%);
+	--color-gray-130: hsl(0, 0%, 3.90%);
+	--color-gray-140: hsl(0, 0%, 2.00%);
+}
+
+
+/* Light Theme */
+:root {
+	--color-accent: var(--color-accent-40);
+	--color-success: var(--color-success-40);
+	--color-info: var(--color-info-40);
+	--color-warning: var(--color-warning-40);
+	--color-danger: var(--color-danger-20);
+
+	--color-foreground: var(--color-gray-90);
+	--color-background: var(--color-gray-10);
+	--color-level-1: white;
+
+	--color-border: var(--color-gray-20);
+}
+
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-accent: var(--color-accent-90);
+		--color-accent-border: var(--color-accent-70);
+		--color-success: var(--color-success-90);
+		--color-success-border: var(--color-success-70);
+		--color-info: var(--color-info-90);
+		--color-info-border: var(--color-info-70);
+		--color-warning: var(--color-warning-90);
+		--color-warning-border: var(--color-warning-70);
+		--color-danger: var(--color-danger-90);
+		/* TODO: Add these for light theme */
+		--color-danger-border: var(--color-danger-70);
+
+		--color-foreground: var(--color-gray-20);
+		--color-background: black;
+		--color-level-1: var(--color-gray-120);
+		--color-hover: var(--color-gray-90);
+		--color-border: var(--color-gray-110);
+	}
+
+	html {
+		color-scheme: dark;
+	}
+}

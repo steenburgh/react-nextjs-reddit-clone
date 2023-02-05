@@ -1,0 +1,36 @@
+.paletteContainer {
+	display: flex;
+	width: 100%;
+	justify-content: space-around;
+}
+
+.colorBox {
+	padding: var(--size-m);
+	border-radius: var(--size-s);
+}
+
+.boxAccent {
+	background: var(--color-accent);
+	border: var(--size-xxs) solid var(--color-accent-border);
+}
+
+.boxSuccess {
+	background: var(--color-success);
+	border: var(--size-xxs) solid var(--color-success-border);
+}
+
+.boxInfo {
+	background: var(--color-info);
+	border: var(--size-xxs) solid var(--color-info-border);
+}
+
+.boxWarning {
+	background: var(--color-warning);
+	border: var(--size-xxs) solid var(--color-warning-border);
+}
+
+.boxDanger {
+	background: var(--color-danger);
+	border: var(--size-xxs) solid var(--color-danger-border);
+}
+

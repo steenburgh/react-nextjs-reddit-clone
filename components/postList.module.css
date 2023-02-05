@@ -1,0 +1,6 @@
+.postList {
+	display: flex;
+	flex-direction: column;
+	gap: var(--size-l);
+	padding: var(--size-l) 0;
+}
