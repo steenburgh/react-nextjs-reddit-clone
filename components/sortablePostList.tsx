@@ -8,12 +8,13 @@ const SortablePostList: React.FC<{
 }> = ({ posts }) => {
 	return (
 		<>
+			<small>Debug - Total Posts: {posts.length}</small>
 			<SortControls />
 			<PostList>
 				{
-					posts.map(({ id, ...props}) =>
+					posts.map((props) =>
 						<Post
-							key={id.toString()}
+							key={props.id.toString()}
 							{...props}
 						/>
 					)
