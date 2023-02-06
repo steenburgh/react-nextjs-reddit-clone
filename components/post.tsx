@@ -1,37 +1,45 @@
-import { PostData } from "@/lib/postApi";
+import { PostData, PostType } from "@/types/post";
 import DateComponent from "./date";
 import VoteDisplay from "./voteDisplay";
 import styles from "./post.module.css";
 import utilStyles from "@/styles/utils.module.css";
 import clsx from "clsx";
 import Link from "next/link";
+import Image from "next/image";
 
 const Post: React.FC<PostData> = ({
 	id,
-	title,
-	dateMs,
+	createdDateJSON,
 	score,
-	user,
-	subReddit,
+	subredditUrl,
+	userUrl,
 	commentCount,
+	title,
+	content,
+	type,
 }) => {
-	const subRedditPath = `/r/${subReddit.id}`;
-	const userPath = `/u/${user.id}`
 	return (
 		<div className={clsx(styles.post, utilStyles.flexContainer, utilStyles.cardLevel1)}>
 			<div className={utilStyles.flexNone}>
 				<VoteDisplay score={score} />
 			</div>
 			<div className={utilStyles.flex1}>
-				<h3>{title}</h3>
+				{ type === PostType.Text ?
+					<h3>{title}</h3> :
+					<Link href={content}>
+						<h3>{title}</h3>
+					</Link>
+				}
 				<div>
-					<Link href={subRedditPath}>{subRedditPath}</Link>
+					<Link href={subredditUrl}>{subredditUrl}</Link>
 				</div>
 				<div>
-					<Link href={userPath}>{userPath}</Link>
+					<Link href={userUrl}>{userUrl}</Link>
 				</div>
-				<div>{}</div>
-				<DateComponent dateMs={dateMs}/>
+				{
+					type === PostType.Text && <div>{content}</div>
+				}
+				<DateComponent dateJSON={createdDateJSON}/>
 				<div>
 					<Link href={`/posts/${id}`}>{commentCount} Comments</Link>
 				</div>
