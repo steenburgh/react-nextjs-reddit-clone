@@ -7,3 +7,8 @@ trim_trailing_whitespace = true
 [*.yml]
 indent_style = space
 indent_size = 2
+
+# When  the prisma formatter is run, it uses spaces
+[schema.prisma]
+indent_style = space
+indent_size = 2

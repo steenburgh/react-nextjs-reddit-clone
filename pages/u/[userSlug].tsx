@@ -1,34 +1,30 @@
-import {
-	getSubRedditIds,
-	getSubReddit,
-	getPostsBySubreddit,
-	type SubReddit,
-	type PostData,
-} from "@/lib/postApi";
 import SortablePostList from "@/components/sortablePostList";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Layout from "@/components/layout";
+import { getPostsByUserSlug, getUserBySlug, getUserSlugs } from "@/lib/post";
+import { PostData, User } from "@/types/post";
 
 type Props = {
 	posts: PostData[],
-	subReddit: SubReddit,
+	user: User,
 }
 
 type Params = {
-	subRedditId: string,
+	userSlug: string,
 }
 
-const UserPage = ({ posts, subReddit }: Props) => (
-	<Layout title={`SubReddit: ${subReddit.displayName}`}>
+const UserPage = ({ posts, user }: Props) => (
+	<Layout title={`User: ${user.name}`}>
 		<SortablePostList posts={posts} />
 	</Layout>
 );
 
+// TODO: Share code with subreddit + maybe post?
 export const getStaticPaths: GetStaticPaths<Params> = async () => {
-	const paths = (await getSubRedditIds())
-		.map((id) => ({
+	const paths = (await getUserSlugs())
+		.map((slug) => ({
 			params: {
-				subRedditId: id
+				userSlug: slug
 			}
 		}))
 	return {
@@ -38,17 +34,17 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
 };
 
 export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) => {
-	const subReddit = await getSubReddit(params!.subRedditId);
-	if (subReddit === undefined) {
+	const user = await getUserBySlug(params!.userSlug);
+	if (user === null) {
 		return {
 			notFound: true
 		}
 	} else {
-		let posts = await getPostsBySubreddit(params!.subRedditId)
+		const posts = await getPostsByUserSlug(params!.userSlug)
 		return {
 			props: {
 				posts,
-				subReddit,
+				user,
 			}
 		}
 	}

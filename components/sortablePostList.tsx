@@ -1,4 +1,4 @@
-import type { PostData } from "@/lib/postApi";
+import { PostData } from "@/types/post";
 import Post from "./post";
 import PostList from "./postList";
 import SortControls from "./sortControls";

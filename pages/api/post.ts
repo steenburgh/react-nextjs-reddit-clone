@@ -1,6 +1,7 @@
 import prisma from '@/lib/prisma';
-import type { Star } from '.prisma/client';
 import { NextApiRequest, NextApiResponse } from "next";
+import { getAllPosts } from '@/lib/post';
+import { PostData } from '@/types/post';
 
 // TODO: Edge runtime?
 // export const config = {
@@ -10,24 +11,20 @@ import { NextApiRequest, NextApiResponse } from "next";
 // 	regions: ["iad1"]
 // };
 
-interface ErrorResponse {
-	error: string;
-}
-
 export default async function assetHandler(
 	req: NextApiRequest,
-	res: NextApiResponse<Star[] | ErrorResponse>,
+	res: NextApiResponse<PostData[]>,
 ) {
 	const { method } = req;
 
 	switch (method) {
 		case 'GET':
 			try {
-				const stars = await prisma.star.findMany();
-				return res.status(200).json(stars);
+				const posts: PostData[] = await getAllPosts();
+				return res.status(200).json(posts);
 			} catch (e) {
 				console.error('Request error', e);
-				return res.status(500).json({ error: 'Error fetching posts' });
+				return res.status(500).end();
 			}
 		default:
 			res.setHeader('Allow', ['GET']);
