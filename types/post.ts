@@ -16,3 +16,11 @@ export interface PostData {
 	type: PostType;
 	commentCount: number; // TODO:
 }
+
+export interface User {
+	name: String;
+}
+
+export interface Subreddit {
+	name: String;
+}

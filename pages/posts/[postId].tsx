@@ -3,13 +3,12 @@ import Layout from "@/components/layout"
 import Post from "@/components/post"
 import {
 	getComments,
-	getPost,
-	getPostIds,
 	type Comment,
-	type PostData
-} from "@/lib/postApi"
+} from "@/lib/mockPostApi"
 import { GetStaticPaths, GetStaticProps } from "next"
 import utilStyles from "@/styles/utils.module.css";
+import { PostData } from "@/types/post";
+import { getPostById, getPostIds } from "@/lib/post";
 
 type Props = {
 	post: PostData,
@@ -64,8 +63,8 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
 	if (postIdNumber === undefined) {
 		return { notFound: true };
 	}
-	const post = await getPost(postIdNumber);
-	if (post === undefined) {
+	const post = await getPostById(postIdNumber);
+	if (post === null) {
 		return { notFound: true };
 	} else {
 		const comments = await getComments(post.id);

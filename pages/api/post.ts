@@ -1,6 +1,7 @@
 import prisma from '@/lib/prisma';
 import { NextApiRequest, NextApiResponse } from "next";
-import { getAllPosts, type Post } from '@/lib/post';
+import { getAllPosts } from '@/lib/post';
+import { PostData } from '@/types/post';
 
 // TODO: Edge runtime?
 // export const config = {
@@ -12,14 +13,14 @@ import { getAllPosts, type Post } from '@/lib/post';
 
 export default async function assetHandler(
 	req: NextApiRequest,
-	res: NextApiResponse<Post[]>,
+	res: NextApiResponse<PostData[]>,
 ) {
 	const { method } = req;
 
 	switch (method) {
 		case 'GET':
 			try {
-				const posts: Post[] = await getAllPosts();
+				const posts: PostData[] = await getAllPosts();
 				return res.status(200).json(posts);
 			} catch (e) {
 				console.error('Request error', e);

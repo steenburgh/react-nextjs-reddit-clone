@@ -1,6 +1,7 @@
 import Layout from "@/components/layout";
 import SortablePostList from "@/components/sortablePostList";
-import { getAllPosts, PostData } from "@/lib/post";
+import { getAllPosts } from "@/lib/post";
+import { PostData } from "@/types/post";
 
 import { GetStaticProps } from "next";
 
