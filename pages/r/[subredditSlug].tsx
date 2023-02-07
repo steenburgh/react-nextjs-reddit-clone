@@ -1,11 +1,15 @@
-import SortablePostList from "@/components/sortablePostList";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Layout from "@/components/layout";
 import { PostData, Subreddit } from "@/types/post";
 import { getPostsBySubredditSlug, getSubredditBySlug, getSubRedditSlugs } from "@/lib/post";
+import PostListWidget from "@/components/postListWidget";
+import { SWRConfig } from "swr";
+import { POSTS_API } from "@/lib/constants";
 
 type Props = {
-	posts: PostData[],
+	fallback: {
+		[POSTS_API]: PostData[],
+	};
 	subreddit: Subreddit,
 }
 
@@ -13,9 +17,13 @@ type Params = {
 	subredditSlug: string,
 }
 
-const SubredditPage = ({ posts, subreddit }: Props) => (
+const SubredditPage = ({ fallback, subreddit }: Props) => (
 	<Layout title={`SubReddit: ${subreddit.name}`}>
-		<SortablePostList posts={posts} />
+		<SWRConfig value={{ fallback }}>
+			<PostListWidget
+				subredditSlug={subreddit.slug}
+			/>
+		</SWRConfig>
 	</Layout>
 );
 
@@ -42,7 +50,9 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
 		let posts = await getPostsBySubredditSlug(params!.subredditSlug);
 		return {
 			props: {
-				posts,
+				fallback: {
+					[POSTS_API]: posts,
+				},
 				subreddit,
 			},
 		};

@@ -18,9 +18,19 @@ export interface PostData {
 }
 
 export interface User {
-	name: String;
+	name: string;
+	slug: string;
 }
 
 export interface Subreddit {
-	name: String;
+	name: string;
+	slug: string;
+}
+
+export interface PostCreateRequest {
+	subredditSlug: string;
+	userSlug: string;
+	title: string;
+	content: string;
+	type: PostType;
 }

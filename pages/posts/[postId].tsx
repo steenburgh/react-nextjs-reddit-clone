@@ -22,7 +22,6 @@ type Params = {
 const PostPage = ({ post, comments }: Props) => (
 	<Layout title={`Post: ${post.title}`}>
 		<div className={clsx(
-
 			utilStyles.flexContainer,
 			utilStyles.flexCol,
 			utilStyles.flexGapL
@@ -33,12 +32,13 @@ const PostPage = ({ post, comments }: Props) => (
 			{comments.map(({ id, content, user, score }) => (
 				<div key={id} className={clsx(
 					utilStyles.cardLevel1,
-					utilStyles.paddingL,
+					utilStyles.flexContainer,
+					utilStyles.flexCol,
+					utilStyles.flexGapL,
 				)}>
-					<small>User: {user.id}</small>
-					<p>Score: {score}</p>
-					<br />
+					<small>{user.id}</small>
 					<p>{content}</p>
+					<small>Score: {score}</small>
 				</div>
 			))}
 		</div>
