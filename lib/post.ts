@@ -1,10 +1,15 @@
 import prisma from "@/lib/prisma";
 import { PostType as DBPostType, Post as DBPost } from ".prisma/client";
 import { Prisma } from '@prisma/client'
-import { PostData, PostType, Subreddit, User } from "@/types/post";
+import { PostCreateRequest, PostData, PostType, Subreddit, User } from "@/types/post";
 
+const APIPostType_ToDBPostType = {
+	[PostType.Link]: DBPostType.LINK,
+	[PostType.ImageLink]: DBPostType.IMAGE_LINK,
+	[PostType.Text]: DBPostType.TEXT,
+}
 
-const DBPostType_ToPostType = {
+const DBPostType_ToAPIPostType = {
 	[DBPostType.LINK]: PostType.Link,
 	[DBPostType.IMAGE_LINK]: PostType.ImageLink,
 	[DBPostType.TEXT]: PostType.Text,
@@ -48,7 +53,7 @@ const fromDbPost = ({
 	subredditUrl: `/r/${subreddit.slug}`,
 	userUrl: `/u/${user.slug}`,
 	createdDateJSON: JSON.stringify(createdDate),
-	type: DBPostType_ToPostType[dbType],
+	type: DBPostType_ToAPIPostType[dbType],
 	commentCount: Math.floor(Math.random()*12), // TODO:
 	...rest,
 });
@@ -130,6 +135,7 @@ export const getSubredditBySlug = async (subredditSlug: string): Promise<Subredd
 		},
 		select: {
 			name: true,
+			slug: true,
 		}
 	});
 
@@ -140,6 +146,33 @@ export const getUserBySlug = async (userSlug: string): Promise<User | null> =>
 		},
 		select: {
 			name: true,
+			slug: true,
 		}
 	});
+
+export const createPost = async ({
+	title,
+	content,
+	subredditSlug,
+	type,
+	userSlug
+}: PostCreateRequest): Promise<void> => {
+	await prisma.post.create({
+		data: {
+			content: content,
+			subreddit: {
+				connect: {
+					slug: subredditSlug,
+				},
+			},
+			user: {
+				connect: {
+					slug: userSlug,
+				},
+			},
+			title: title,
+			type: APIPostType_ToDBPostType[type],
+		},
+	})
+};
 
