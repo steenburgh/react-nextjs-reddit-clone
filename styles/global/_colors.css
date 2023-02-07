@@ -73,10 +73,14 @@
 	--color-danger: var(--color-danger-20);
 
 	--color-foreground: var(--color-gray-90);
-	--color-background: var(--color-gray-10);
+	--color-text-disabled: var(--color-gray-30);
+	--color-background: var(--color-gray-5);
 	--color-level-1: white;
+	--color-level-2: var(--color-gray-10);
+	--color-level-3: var(--color-gray-20);
+	--color-level-4: var(--color-gray-30);
 
-	--color-border: var(--color-gray-20);
+	--color-border: var(--color-level-4);
 }
 
 
@@ -95,10 +99,14 @@
 		--color-danger-border: var(--color-danger-70);
 
 		--color-foreground: var(--color-gray-20);
+		--color-text-disabled: var(--color-gray-70);
 		--color-background: black;
 		--color-level-1: var(--color-gray-120);
-		--color-hover: var(--color-gray-90);
-		--color-border: var(--color-gray-110);
+		--color-level-2: var(--color-gray-110);
+		--color-level-3: var(--color-gray-100);
+		--color-level-4: var(--color-gray-90);
+
+		--color-border: var(--color-level-4);
 	}
 
 	html {

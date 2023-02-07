@@ -1,49 +1,48 @@
 import styles from "./sortControls.module.css";
-import utilStyles from "@/styles/utils.module.css";
 import clsx from "clsx";
-import { useState } from "react";
 
-enum SortType {
-	DATE,
-	SCORE,
-	HOT
+export enum SortType {
+	Top,
+	New,
+	Hot
 }
 
 const SORTS = [
 	{
-		type: SortType.DATE,
-		displayName: "Date",
+		type: SortType.Top,
+		displayName: "Top",
 	},
 	{
-		type: SortType.SCORE,
-		displayName: "Score",
+		type: SortType.New,
+		displayName: "New",
 	},
 	{
-		type: SortType.HOT,
+		type: SortType.Hot,
 		displayName: "Hot",
 	}
 ];
 
-const SortControls: React.FC = () => {
-	const [sortType, setSortType] = useState<SortType>(SortType.SCORE);
-
+const SortControls: React.FC<{
+	sortType: SortType,
+	onSortTypeChange: (newSortType: SortType) => void,
+}> = ({
+	sortType,
+	onSortTypeChange
+}) => {
 	return (
-		<div className={clsx(utilStyles.cardLevel1, styles.container)}>
-			<div>Sort By</div>
-			<div className={styles.sortOptions}>
-				{SORTS.map(({ type, displayName }) =>
-					<button
-						className={clsx(
-							styles.sortTypeButton,
-							sortType === type && styles.highlight
-						)}
-						key={type}
-						onClick={() => setSortType(type)}
-					>
-						{displayName}
-					</button>
-				)}
-			</div>
+		<div className={styles.sortOptions}>
+			{SORTS.map(({ type, displayName }) =>
+				<button
+					className={clsx(
+						styles.sortTypeButton,
+						sortType === type && styles.highlight
+					)}
+					key={type}
+					onClick={() => onSortTypeChange(type)}
+				>
+					{displayName}
+				</button>
+			)}
 		</div>
 	);
 };

@@ -31,8 +31,27 @@
 	border: 1px solid var(--color-border);
 	background: var(--color-level-1);
 	border-radius: var(--border-radius);
+	padding: var(--size-l);
 }
 
 .paddingL {
 	padding: var(--size-l);
+}
+
+.iconButton {
+	background: none;
+	width: unset;
+	height: unset;
+	line-height: 0;
+	padding: 0;
+	margin: 0;
+	border: none;
+}
+
+.iconButton:hover {
+	background: var(--color-level-2);
+}
+
+.iconButton:focus-visible {
+	background: var(--color-level-3);
 }

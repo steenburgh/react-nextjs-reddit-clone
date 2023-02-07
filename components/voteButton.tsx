@@ -27,8 +27,8 @@ const VoteButton: React.FC<{
 	return (
 		<button
 			className={clsx(
-				styles.iconButton,
-				styles.voteButon,
+				utilStyles.iconButton,
+				styles.voteButton,
 				type === VoteType.DOWN && utilStyles.flipH
 			)}
 			onClick={handleClick}

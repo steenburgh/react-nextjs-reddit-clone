@@ -6,7 +6,7 @@ const dateFormatter = Intl.DateTimeFormat(undefined, {
 const DateComponent: React.FC<{
 	dateJSON: string;
 }> = ({ dateJSON }) => {
-	const dateObj: Date = new Date();
+	const dateObj: Date = new Date(JSON.parse(dateJSON));
 	return (
 		/* TODO: Is this really the best way to fix the "Text content did not match" warning?
 			Needs further investigation to verify, but...
