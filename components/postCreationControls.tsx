@@ -5,6 +5,7 @@ import styles from "./postCreationControls.module.css";
 import utilStyles from "@/styles/utils.module.css";
 import { useSWRConfig } from "swr";
 import { allPostsMatcher } from "@/lib/swr/postKeyGenerator";
+import postJSON from "@/lib/postJSON";
 
 const PostCreationControls: React.FC<{
 	subredditSlug?: string,
@@ -33,13 +34,7 @@ const PostCreationControls: React.FC<{
 		};
 
 		try {
-			await fetch("/api/post", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(createRequest),
-			});
+			await postJSON("/api/post", createRequest);
 			await mutate(allPostsMatcher);
 			setTitle("");
 			setContent("");
