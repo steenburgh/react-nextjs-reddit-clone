@@ -4,7 +4,7 @@ import Post from "@/components/post"
 import {
 	getComments,
 	type Comment,
-} from "@/lib/db/mockPostApi"
+} from "@/lib/mockPostApi"
 import { GetStaticPaths, GetStaticProps } from "next"
 import utilStyles from "@/styles/utils.module.css";
 import { PostData } from "@/types/post";
