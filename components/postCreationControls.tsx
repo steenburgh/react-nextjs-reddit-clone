@@ -3,12 +3,17 @@ import { useState } from "react";
 import clsx from "clsx";
 import styles from "./postCreationControls.module.css";
 import utilStyles from "@/styles/utils.module.css";
+import { useSWRConfig } from "swr";
+import { allPostsMatcher } from "@/lib/swr/postKeyGenerator";
 
 const PostCreationControls: React.FC<{
-	subredditSlug?: string
+	subredditSlug?: string,
+	onPostCreateSuccess?: () => Promise<void>,
 }> = ({
+	onPostCreateSuccess = async () => {},
 	subredditSlug = "cats"
 }) => {
+	const { mutate } = useSWRConfig();
 	const [loading, setLoading] = useState<boolean>(false);
 	const [title, setTitle] = useState("");
 	const [content, setContent] = useState("");
@@ -17,7 +22,7 @@ const PostCreationControls: React.FC<{
 	// TODO: Picker UI for subreddits + post type
 	const type = PostType.Text;
 
-	const createPost = () => {
+	const createPost = async () => {
 		setLoading(true);
 		const createRequest: PostCreateRequest = {
 			title,
@@ -27,18 +32,20 @@ const PostCreationControls: React.FC<{
 			type,
 		};
 
-		fetch("/api/post", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(createRequest),
-		}).then(() =>{
+		try {
+			await fetch("/api/post", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(createRequest),
+			});
+			await mutate(allPostsMatcher);
 			setTitle("");
 			setContent("");
-		}).finally(() => {
+		} finally {
 			setLoading(false);
-		});
+		}
 	};
 
 	return (

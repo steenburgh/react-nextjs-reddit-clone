@@ -1,4 +1,7 @@
-const postFetchUrl = ({
+
+const API_BASE = "/api/posts";
+
+export const postKey = ({
 	userSlug,
 	subredditSlug
 }: {
@@ -13,6 +16,6 @@ const postFetchUrl = ({
 	subredditSlug && searchParams.set("r", subredditSlug);
 
 	return `/api/posts?${searchParams.toString()}`;
-}
+};
 
-export default postFetchUrl;
+export const allPostsMatcher = (key: unknown): boolean => typeof key === "string" && key.startsWith(API_BASE);

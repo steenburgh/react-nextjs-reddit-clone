@@ -5,7 +5,7 @@ import { getPostsByUserSlug, getUserBySlug, getUserSlugs } from "@/lib/db/post";
 import { PostData, User } from "@/types/post";
 import { POSTS_API } from "@/lib/constants";
 import { SWRConfig } from "swr";
-import postFetchUrl from "@/lib/swr/postFetchUrl";
+import { postKey } from "@/lib/swr/postKeyGenerator";
 
 type Props = {
 	fallback: {
@@ -54,7 +54,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
 		return {
 			props: {
 				fallback: {
-					[postFetchUrl({ userSlug })]: posts,
+					[postKey({ userSlug })]: posts,
 				},
 				user,
 			}

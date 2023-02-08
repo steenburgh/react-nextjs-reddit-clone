@@ -3,7 +3,7 @@ import PostListWidget from "@/components/postListWidget";
 import SortablePostList from "@/components/postListWidget";
 import { POSTS_API } from "@/lib/constants";
 import { getAllPosts } from "@/lib/db/post";
-import postFetchUrl from "@/lib/swr/postFetchUrl";
+import { postKey } from "@/lib/swr/postKeyGenerator";
 import { PostData } from "@/types/post";
 
 import { GetStaticProps } from "next";
@@ -29,7 +29,7 @@ const Home = ({ fallback }: Props) => {
 export const getStaticProps: GetStaticProps<Props> = async () => ({
 	props: {
 		fallback: {
-			[postFetchUrl({})]: await getAllPosts(),
+			[postKey({})]: await getAllPosts(),
 		},
 	},
 });

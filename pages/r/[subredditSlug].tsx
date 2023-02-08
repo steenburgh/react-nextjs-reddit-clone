@@ -4,7 +4,7 @@ import { PostData, Subreddit } from "@/types/post";
 import { getPostsBySubredditSlug, getSubredditBySlug, getSubRedditSlugs } from "@/lib/db/post";
 import PostListWidget from "@/components/postListWidget";
 import { SWRConfig } from "swr";
-import postFetchUrl from "@/lib/swr/postFetchUrl";
+import { postKey } from "@/lib/swr/postKeyGenerator";
 
 type Props = {
 	fallback: {
@@ -52,7 +52,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
 		return {
 			props: {
 				fallback: {
-					[postFetchUrl({
+					[postKey({
 						subredditSlug,
 					})]: posts,
 				},

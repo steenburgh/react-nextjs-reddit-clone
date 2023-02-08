@@ -9,7 +9,7 @@ import PostCreationControls from "./postCreationControls";
 import utilStyles from "@/styles/utils.module.css";
 import sortPosts, { SortType } from "@/lib/postSorter";
 import fetcher from "@/lib/swr/fetcher";
-import postFetchUrl from "@/lib/swr/postFetchUrl";
+import { postKey } from "@/lib/swr/postKeyGenerator";
 
 const PostListWidget: React.FC<{
 	subredditSlug?: string;
@@ -18,14 +18,14 @@ const PostListWidget: React.FC<{
 	userSlug,
 	subredditSlug,
 }) => {
-	const [sortType, setSortType] = useState<SortType>(SortType.Top);
+	const [sortType, setSortType] = useState<SortType>(SortType.New);
 	const {
 		data: posts = [],
 		error,
 		isLoading,
-		isValidating
+		isValidating,
 	} = useSWR<PostData[]>(
-		postFetchUrl({ userSlug, subredditSlug }),
+		postKey({ userSlug, subredditSlug }),
 		fetcher,
 	);
 
