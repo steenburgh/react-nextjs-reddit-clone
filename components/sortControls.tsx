@@ -1,11 +1,6 @@
 import styles from "./sortControls.module.css";
 import clsx from "clsx";
-
-export enum SortType {
-	Top,
-	New,
-	Hot
-}
+import { SortType } from "@/lib/postSorter";
 
 const SORTS = [
 	{

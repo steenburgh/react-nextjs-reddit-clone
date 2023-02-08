@@ -1,6 +1,6 @@
-import prisma from '@/lib/prisma';
+import prisma from '@/lib/db/prisma';
 import { NextApiRequest, NextApiResponse } from "next";
-import { createPost, getAllPosts } from '@/lib/post';
+import { createPost, getAllPosts } from '@/lib/db/post';
 import { PostCreateRequest, PostData } from '@/types/post';
 
 // TODO: Edge runtime?
