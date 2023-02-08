@@ -27,9 +27,9 @@ const Post: React.FC<PostData> = ({
 		<div className={utilStyles.flex1}>
 			{ type === PostType.Text ?
 				<h3>{title}</h3> :
-					<Link href={content}>
+				<a href={content}>
 					<h3>{title}</h3>
-					</Link>
+				</a>
 			}
 			<div>
 				<Link href={subredditUrl}>{subredditUrl}</Link>
