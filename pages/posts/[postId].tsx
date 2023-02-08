@@ -8,7 +8,7 @@ import {
 import { GetStaticPaths, GetStaticProps } from "next"
 import utilStyles from "@/styles/utils.module.css";
 import { PostData } from "@/types/post";
-import { getPostById, getPostIds } from "@/lib/post";
+import { getPostById, getPostIds } from "@/lib/db/post";
 
 type Props = {
 	post: PostData,

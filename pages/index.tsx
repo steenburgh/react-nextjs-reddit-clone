@@ -2,15 +2,17 @@ import Layout from "@/components/layout";
 import PostListWidget from "@/components/postListWidget";
 import SortablePostList from "@/components/postListWidget";
 import { POSTS_API } from "@/lib/constants";
-import { getAllPosts } from "@/lib/post";
+import { getAllPosts } from "@/lib/db/post";
+import { postKey } from "@/lib/swr/postKeyGenerator";
 import { PostData } from "@/types/post";
 
 import { GetStaticProps } from "next";
+import { unstable_serialize } from "swr";
 import { SWRConfig } from "swr/_internal";
 
 interface Props {
 	fallback: {
-		[POSTS_API]: PostData[]
+		[key: string]: PostData[]
 	}
 }
 
@@ -27,9 +29,9 @@ const Home = ({ fallback }: Props) => {
 export const getStaticProps: GetStaticProps<Props> = async () => ({
 	props: {
 		fallback: {
-			[POSTS_API]: (await getAllPosts()).slice(0, 3) // TODO: Undo
-		}
-	}
+			[postKey({})]: await getAllPosts(),
+		},
+	},
 });
 
 export default Home;

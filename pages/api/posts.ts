@@ -1,7 +1,5 @@
-import prisma from '@/lib/prisma';
-import { NextApiRequest, NextApiResponse } from "next";
-import { getAllPosts } from '@/lib/post';
-import { PostData } from '@/types/post';
+import { getAllPosts, getPostsBySubredditSlug, getPostsByUserSlug } from '@/lib/db/post';
+import { requestHandler } from '@/lib/apiHelper';
 
 // TODO: Edge runtime?
 // export const config = {
@@ -11,23 +9,29 @@ import { PostData } from '@/types/post';
 // 	regions: ["iad1"]
 // };
 
-export default async function postsHandler(
-	req: NextApiRequest,
-	res: NextApiResponse<PostData[]>,
-) {
-	const { method } = req;
+const postsHandler = requestHandler({
+	GET: async (req) => {
+		const subredditSlug = req.query.r;
+		const userSlug = req.query.u;
+		const subredditValid = typeof subredditSlug === "string";
+		const userValid = typeof userSlug === "string";
 
-	switch (method) {
-		case 'GET':
-			try {
-				const posts: PostData[] = await getAllPosts();
-				return res.status(200).json(posts);
-			} catch (e) {
-				console.error('Request error', e);
-				return res.status(500).end();
-			}
-		default:
-			res.setHeader('Allow', ['GET']);
-			return res.status(405).end(`Method ${method} Not Allowed`);
+		if (subredditValid &&  !userValid) {
+			return {
+				data: await getPostsBySubredditSlug(subredditSlug),
+			};
+		} else if (userValid && !subredditValid) {
+			return {
+				data: await getPostsByUserSlug(userSlug)
+			};
+		} else if (!userValid && !subredditValid) {
+			return {
+				data: await getAllPosts()
+			};
+		} else {
+			return { status: 400 };
+		}
 	}
-}
+});
+
+export default postsHandler;

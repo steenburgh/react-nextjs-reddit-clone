@@ -1,46 +1,15 @@
 import clsx from "clsx";
-import fetcher from "@/lib/fetcher";
 import { PostData } from "@/types/post";
 import Post from "./post";
 import PostList from "./postList";
-import SortControls, { SortType } from "./sortControls";
+import SortControls from "./sortControls";
 import useSWR from "swr";
 import { useMemo, useState } from "react";
 import PostCreationControls from "./postCreationControls";
 import utilStyles from "@/styles/utils.module.css";
-import { POSTS_API } from "@/lib/constants";
-
-
-const MS_IN_HOUR = 1000*60*60;
-const getTimeMSFromPost = (post: PostData): number => {
-	return new Date(JSON.parse(post.createdDateJSON)).getTime()
-};
-const comparators: Record<
-	SortType,
-	(postA: PostData, postB: PostData) => number
-> = {
-	[SortType.Hot]: (postA, postB) => {
-		const newThreshold = Date.now() - 2*MS_IN_HOUR;
-		const dateMsA = getTimeMSFromPost(postA);
-		const dateMsB = getTimeMSFromPost(postB);
-		const aIsNew = dateMsA >= newThreshold;
-		const bIsNew = dateMsB >= newThreshold;
-		if (aIsNew === bIsNew) {
-			return postB.score - postA.score;
-		} else {
-			return bIsNew ? 1 : -1;
-		}
-	},
-	[SortType.Top]: (postA, postB) => postB.score - postA.score,
-	[SortType.New]: (postA, postB) => {
-		const dateMsA = getTimeMSFromPost(postA);
-		const dateMsB = getTimeMSFromPost(postB);
-		return dateMsB - dateMsA;
-	}
-}
-
-const sortPosts = (posts: PostData[], sortType: SortType): PostData[] =>
-	posts.sort(comparators[sortType]);
+import sortPosts, { SortType } from "@/lib/postSorter";
+import fetcher from "@/lib/swr/fetcher";
+import { postKey } from "@/lib/swr/postKeyGenerator";
 
 const PostListWidget: React.FC<{
 	subredditSlug?: string;
@@ -49,15 +18,15 @@ const PostListWidget: React.FC<{
 	userSlug,
 	subredditSlug,
 }) => {
-	const [sortType, setSortType] = useState<SortType>(SortType.Top);
+	const [sortType, setSortType] = useState<SortType>(SortType.Hot);
 	const {
 		data: posts = [],
 		error,
 		isLoading,
-		isValidating
+		isValidating,
 	} = useSWR<PostData[]>(
-		POSTS_API, // TODO: Move to shared SWR call
-		fetcher
+		postKey({ userSlug, subredditSlug }),
+		fetcher,
 	);
 
 	const sortedPosts = useMemo<PostData[]>(

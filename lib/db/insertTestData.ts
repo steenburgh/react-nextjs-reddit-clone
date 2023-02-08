@@ -1,5 +1,5 @@
 // TODO: Remove in prod
-import prisma from "@/lib/prisma";
+import prisma from "@/lib/db/prisma";
 import { PostType, Post } from ".prisma/client";
 
 const MS_IN_HOUR = 1000*60*60;
