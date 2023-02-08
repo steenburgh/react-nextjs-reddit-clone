@@ -18,7 +18,7 @@ const PostListWidget: React.FC<{
 	userSlug,
 	subredditSlug,
 }) => {
-	const [sortType, setSortType] = useState<SortType>(SortType.New);
+	const [sortType, setSortType] = useState<SortType>(SortType.Hot);
 	const {
 		data: posts = [],
 		error,
