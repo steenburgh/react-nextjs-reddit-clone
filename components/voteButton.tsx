@@ -3,22 +3,17 @@ import utilStyles from "@/styles/utils.module.css";
 import clsx from "clsx";
 import VoteEmpty from "./icons/voteEmpty";
 import VoteSelected from "./icons/voteSelected";
-
-export enum VoteType {
-	UP,
-	DOWN,
-	NONE,
-}
+import { VoteType } from "@/types/post";
 
 const VoteButton: React.FC<{
 	selected: boolean,
-	type: VoteType.UP | VoteType.DOWN,
+	type: VoteType.Up | VoteType.Down,
 	onVote: (voteType: VoteType) => void,
 }> = ({ selected, type, onVote }) => {
 	// TODO: Hover states, colors
 	const handleClick = () => {
 		if (selected) {
-			onVote(VoteType.NONE);
+			onVote(VoteType.None);
 		} else {
 			onVote(type);
 		}
@@ -29,10 +24,10 @@ const VoteButton: React.FC<{
 			className={clsx(
 				utilStyles.iconButton,
 				styles.voteButton,
-				type === VoteType.DOWN && utilStyles.flipH
+				type === VoteType.Down && utilStyles.flipH
 			)}
 			onClick={handleClick}
-			title={type === VoteType.UP ? "Upvote button" : "Downvote button"}
+			title={type === VoteType.Up ? "Upvote button" : "Downvote button"}
 		>
 			{selected ? <VoteSelected /> : <VoteEmpty />}
 		</button>

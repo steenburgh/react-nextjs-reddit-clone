@@ -34,3 +34,9 @@ export interface PostCreateRequest {
 	content: string;
 	type: PostType;
 }
+
+export enum VoteType {
+	Up = "Up",
+	Down = "Down",
+	None = "None",
+}
