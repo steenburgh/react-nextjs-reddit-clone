@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma";
+import prisma from "@/lib/db/prisma";
 import { PostType as DBPostType, Post as DBPost } from ".prisma/client";
 import { Prisma } from '@prisma/client'
 import { PostCreateRequest, PostData, PostType, Subreddit, User } from "@/types/post";
