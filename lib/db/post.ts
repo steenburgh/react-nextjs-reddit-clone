@@ -1,7 +1,7 @@
 import prisma from "@/lib/db/prisma";
 import { PostType as DBPostType, Post as DBPost } from ".prisma/client";
 import { Prisma } from '@prisma/client'
-import { PostCreateRequest, PostData, PostType, Subreddit, User } from "@/types/post";
+import { PostCreateRequest, PostData, PostType, Subreddit, User, VoteType } from "@/types/post";
 
 const APIPostType_ToDBPostType = {
 	[PostType.Link]: DBPostType.LINK,
@@ -175,4 +175,23 @@ export const createPost = async ({
 		},
 	})
 };
+
+const _voteOnPost = async (postId: number, increment: boolean): Promise<number> =>
+	(await prisma.post.update({
+		where: {
+			id: postId,
+		},
+		data: {
+			score: increment ? { increment: 1 } : { decrement: 1 },
+		},
+		select: {
+			score: true,
+		}
+	})).score;
+
+export const upvotePost = async (postId: number): Promise<number> =>
+	_voteOnPost(postId, true);
+
+export const downvotePost = async (postId: number): Promise<number> =>
+	_voteOnPost(postId, false);
 
