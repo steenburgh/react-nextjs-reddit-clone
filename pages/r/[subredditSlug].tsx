@@ -1,14 +1,14 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import Layout from "@/components/layout";
 import { PostData, Subreddit } from "@/types/post";
-import { getPostsBySubredditSlug, getSubredditBySlug, getSubRedditSlugs } from "@/lib/post";
+import { getPostsBySubredditSlug, getSubredditBySlug, getSubRedditSlugs } from "@/lib/db/post";
 import PostListWidget from "@/components/postListWidget";
 import { SWRConfig } from "swr";
-import { POSTS_API } from "@/lib/constants";
+import postFetchUrl from "@/lib/swr/postFetchUrl";
 
 type Props = {
 	fallback: {
-		[POSTS_API]: PostData[],
+		[key: string]: PostData[],
 	};
 	subreddit: Subreddit,
 }
@@ -41,17 +41,20 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
 };
 
 export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) => {
-	const subreddit = await getSubredditBySlug(params!.subredditSlug);
+	const subredditSlug = params!.subredditSlug
+	const subreddit = await getSubredditBySlug(subredditSlug);
 	if (subreddit === null) {
 		return {
 			notFound: true,
 		};
 	} else {
-		let posts = await getPostsBySubredditSlug(params!.subredditSlug);
+		let posts = await getPostsBySubredditSlug(subredditSlug);
 		return {
 			props: {
 				fallback: {
-					[POSTS_API]: posts,
+					[postFetchUrl({
+						subredditSlug,
+					})]: posts,
 				},
 				subreddit,
 			},

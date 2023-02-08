@@ -1,14 +1,15 @@
-import SortablePostList from "@/components/postListWidget";
+import PostListWidget from "@/components/postListWidget";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Layout from "@/components/layout";
-import { getPostsByUserSlug, getUserBySlug, getUserSlugs } from "@/lib/post";
+import { getPostsByUserSlug, getUserBySlug, getUserSlugs } from "@/lib/db/post";
 import { PostData, User } from "@/types/post";
 import { POSTS_API } from "@/lib/constants";
 import { SWRConfig } from "swr";
+import postFetchUrl from "@/lib/swr/postFetchUrl";
 
 type Props = {
 	fallback: {
-		[POSTS_API]: PostData[],
+		[key: string]: PostData[],
 	};
 	user: User,
 }
@@ -20,7 +21,7 @@ type Params = {
 const UserPage = ({ fallback, user }: Props) => (
 	<Layout title={`User: ${user.name}`}>
 		<SWRConfig value={{ fallback }}>
-			<SortablePostList
+			<PostListWidget
 				userSlug={user.slug}
 			/>
 		</SWRConfig>
@@ -42,17 +43,18 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
 };
 
 export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) => {
-	const user = await getUserBySlug(params!.userSlug);
+	const userSlug = params!.userSlug
+	const user = await getUserBySlug(userSlug);
 	if (user === null) {
 		return {
 			notFound: true
 		}
 	} else {
-		const posts = await getPostsByUserSlug(params!.userSlug)
+		const posts = await getPostsByUserSlug(userSlug)
 		return {
 			props: {
 				fallback: {
-					[POSTS_API]: posts,
+					[postFetchUrl({ userSlug })]: posts,
 				},
 				user,
 			}

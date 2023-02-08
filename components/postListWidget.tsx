@@ -7,8 +7,9 @@ import useSWR from "swr";
 import { useMemo, useState } from "react";
 import PostCreationControls from "./postCreationControls";
 import utilStyles from "@/styles/utils.module.css";
-import { POSTS_API } from "@/lib/constants";
 import sortPosts, { SortType } from "@/lib/postSorter";
+import fetcher from "@/lib/swr/fetcher";
+import postFetchUrl from "@/lib/swr/postFetchUrl";
 
 const PostListWidget: React.FC<{
 	subredditSlug?: string;
@@ -24,8 +25,8 @@ const PostListWidget: React.FC<{
 		isLoading,
 		isValidating
 	} = useSWR<PostData[]>(
-		POSTS_API, // TODO: Move to shared SWR call
-		fetcher
+		postFetchUrl({ userSlug, subredditSlug }),
+		fetcher,
 	);
 
 	const sortedPosts = useMemo<PostData[]>(
