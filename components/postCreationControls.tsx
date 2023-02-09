@@ -61,7 +61,6 @@ const PostCreationControls: React.FC<{
 				onChange={(e) => setContent(e.target.value)}
 				placeholder="Enter some text..."
 			/>
-			<p>Subreddit: /r/{subredditSlug}</p>
 			<div>
 				<button
 					disabled={loading}
