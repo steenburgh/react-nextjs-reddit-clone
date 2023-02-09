@@ -1,10 +1,7 @@
-interface DisplayNameAndId {
+interface User {
 	displayName: string;
 	id: string;
 }
-
-export type SubReddit = DisplayNameAndId;
-export type User = DisplayNameAndId;
 
 export interface Comment {
 	id: string;
@@ -13,16 +10,6 @@ export interface Comment {
 	content: string;
 	score: number;
 	children?: Comment[]
-}
-
-export interface PostData {
-	id: number;
-	title: string;
-	dateMs: number;
-	score: number;
-	subReddit: SubReddit;
-	user: User;
-	commentCount: number;
 }
 
 const MOCK_COMMENT_CONTENTS = [
@@ -43,25 +30,7 @@ const MOCK_USERS = [
 	{ displayName: "Test User 1234", id: "testUser1234" }
 ];
 
-const MOCK_SUBREDDITS = [
-	{ displayName: "Cats", id: "cats", },
-	{ displayName: "Dogs", id: "dogs", },
-	{ displayName: "Test Subreddit 1234", id: "TestSubReddit", },
-	{ displayName: "Mom's Spaghetti (knees weak, arms are heavy)", id: "MomsSpaghetti" },
-]
-
-const MOCK_POST_COUNT = 12;
-const MS_IN_HOUR = 1000*60*60;
-const getCommentCount = (postId: number) => (postId % 3) * 3;
-const MOCK_POSTS: PostData[] = Array.from({ length: MOCK_POST_COUNT }).map((_, index) => ({
-	id: index,
-	title: `Post number ${index}`,
-	dateMs: Date.now() - index * MS_IN_HOUR,
-	score: (index % 3),
-	subReddit: MOCK_SUBREDDITS[index % MOCK_SUBREDDITS.length],
-	user: MOCK_USERS[index % MOCK_USERS.length],
-	commentCount: getCommentCount(index),
-}));
+export const getCommentCount = (postId: number) => (postId % 3) * 3;
 
 const generateComments = (postId: number): Comment[] =>
 	Array.from({ length: getCommentCount(postId) })
@@ -75,47 +44,3 @@ const generateComments = (postId: number): Comment[] =>
 
 export const getComments = async (postId: number): Promise<Comment[]> =>
 	Promise.resolve(generateComments(postId));
-
-export const getPostIds = async (): Promise<number[]> =>
-	Promise.resolve(
-		MOCK_POSTS.map((post) => post.id)
-	);
-
-// TODO: 404 for these?
-export const getPost = async (postId: number): Promise<PostData | undefined> =>
-	Promise.resolve(
-		MOCK_POSTS.find((post) => post.id === postId)
-	);
-
-export const getPosts = async (): Promise<PostData[]> =>
-	Promise.resolve(MOCK_POSTS);
-
-export const getPostsByUser = async (userId: string): Promise<PostData[]> =>
-	Promise.resolve(
-		MOCK_POSTS.filter(({ user }) => user.id === userId)
-	);
-
-export const getPostsBySubreddit = async (subRedditId: string): Promise<PostData[]> =>
-	Promise.resolve(
-		MOCK_POSTS.filter(({ subReddit }) => subReddit.id === subRedditId)
-	);
-
-export const getSubRedditIds = async (): Promise<string[]> =>
-	Promise.resolve(
-		MOCK_SUBREDDITS.map((subReddit) => subReddit.id)
-	);
-
-export const getUserIds = async (): Promise<string[]> =>
-	Promise.resolve(
-		MOCK_USERS.map((user) => user.id)
-	);
-
-export const getUser = async (userId: string): Promise<User | undefined> =>
-	Promise.resolve(
-		MOCK_USERS.find(({ id }) => id === userId)
-	);
-
-export const getSubReddit = async (subredditId: string): Promise<SubReddit | undefined> =>
-	Promise.resolve(
-		MOCK_SUBREDDITS.find(({ id }) => id === subredditId)
-	);

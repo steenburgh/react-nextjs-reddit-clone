@@ -1,6 +1,39 @@
 # NextJS/React/TypeScript Reddit Clone
 This app is deployed to https://reddit-clone.duncansteenburgh.com/
 
+## Features
+Implemented
+* Automatic Light + Dark theme. Automatically matches your computer/phone's settings
+* Automatic refresh + error retries
+* Real-time updates
+* Server-side rendering to improve performance
+* Click post titles to navigate to linked content
+* View posts by subreddit: Click the subreddit name on a post
+* View posts by user: Click the user name on a post
+* Vote on posts
+* Create posts (text)
+* Sort posts by Top/New/Hot
+* REST API for accessing SQL backend
+* [Work in progress] Click the 'comments' button to view comments on posts
+
+Planned
+* Create image + link posts
+* Post in a specific subreddit
+* User sessions + authentication
+* Image embeds
+* Visual rework + polish
+* Image hosting
+
+
+## Technologies
+* [TypeScript](https://www.typescriptlang.org/) - JavaScript with types. A popular extension of JavaScript built with the goal of reducing the amount of bugs in front-end code.
+* [React](https://reactjs.org/) - A popular virtual DOM-based library for declaratively building component-based UIs
+* [Next.js](https://nextjs.org/) - All-in-one full-stack framework for building high performance, SEO-optimized applications with a focus on server-side rendering and static site generation (SSR/SSG)
+* [SWR](https://swr.vercel.app/) - Library for declaratively making API calls, and automatically keeping data up to date in realtime. Stands for 'stale while revalidate', which means automatically display stale data immediately, then revalidate in the background. Includes lots of goodies such as automatic refreshes when the user turns on their pc/comes online/switches to the tab, error retries, and API call deduping to reduce the need for a global state management solution.
+* [Prisma](https://www.prisma.io/) - A TypeScript ORM. This project uses it for interfacing with the app's MySQL backend
+* [Vercel](https://vercel.com/) - Full stack application hosting platform. Lots of cool stuff built in like automatic CDN caching, and GitHub/Next.js integration
+* [PlanetScale](https://planetscale.com/) - Serverless database platform. Lots of cool features like schema branches and deploy requests
+
 ## Development scripts
 * `npm run dev` -> Run the dev server. **Will not work properly if you don't have a local database set up**
 * `npm run lint` -> Static analysis: check your code for style issues and common mistakes

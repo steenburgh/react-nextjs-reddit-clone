@@ -19,12 +19,7 @@ const PostListWidget: React.FC<{
 	subredditSlug,
 }) => {
 	const [sortType, setSortType] = useState<SortType>(SortType.Hot);
-	const {
-		data: posts = [],
-		error,
-		isLoading,
-		isValidating,
-	} = useSWR<PostData[]>(
+	const { data: posts = [] } = useSWR<PostData[]>(
 		postKey({ userSlug, subredditSlug }),
 		fetcher,
 	);
@@ -40,12 +35,6 @@ const PostListWidget: React.FC<{
 			utilStyles.flexCol,
 			utilStyles.flexGapL,
 		)}>
-			<small>
-				{"Debug - SWR Status:"}
-				{isLoading && " loading..."}
-				{isValidating && " validating..."}
-				{error && ` error: ${JSON.stringify(error)}`}
-			</small>
 			{
 				userSlug === undefined &&
 					<PostCreationControls

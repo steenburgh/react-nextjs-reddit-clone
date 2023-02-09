@@ -2,6 +2,7 @@ import prisma from "@/lib/db/prisma";
 import { PostType as DBPostType, Post as DBPost } from ".prisma/client";
 import { Prisma } from '@prisma/client'
 import { PostCreateRequest, PostData, PostType, Subreddit, User, VoteType } from "@/types/post";
+import { getCommentCount } from "../mockPostApi";
 
 const APIPostType_ToDBPostType = {
 	[PostType.Link]: DBPostType.LINK,
@@ -35,17 +36,18 @@ const POST_SELECT = {
 };
 
 const fromDbPost = ({
+	id,
 	user,
 	subreddit,
-	type: dbType,
 	createdDate,
+	type: dbType,
 	...rest
 }: {
+	id: number,
 	user: { slug: string },
 	subreddit: { slug: string },
-	type: DBPostType,
 	createdDate: Date,
-	id: number,
+	type: DBPostType,
 	score: number,
 	title: string,
 	content: string,
@@ -54,7 +56,8 @@ const fromDbPost = ({
 	userUrl: `/u/${user.slug}`,
 	createdDateJSON: JSON.stringify(createdDate),
 	type: DBPostType_ToAPIPostType[dbType],
-	commentCount: Math.floor(Math.random()*12), // TODO:
+	commentCount: getCommentCount(id), // TODO:
+	id,
 	...rest,
 });
 
